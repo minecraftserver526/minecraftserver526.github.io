@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jelentkezési lap – JL-01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Elrendezés: hivatali nyomtatvány — bal oldalon rögzített rovatjegyzék, jobbra számozott rovatok egyetlen lapon */
+:root{
+  --paper:#eef0f3; --sheet:#ffffff; --ink:#0f1a2b; --muted:#5a6577; --line:#d9dee6; --soft:#f6f7f9;
+  --accent:#0d5c57; --accent-2:#e4f0ee; --accent-ink:#ffffff; --seal:#b42318; --seal-soft:#fdecea;
+  --hu-r:#c8102e; --hu-w:#ffffff; --hu-g:#2e7d32;
+  --f-display:"Familjen Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r:12px; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0b1018; --sheet:#121924; --ink:#e6ebf2; --muted:#94a0b2; --line:#263142; --soft:#172030;
+    --accent:#5cc2b6; --accent-2:#13302d; --accent-ink:#06201d; --seal:#ff7b6e; --seal-soft:#2d1614;
+    --hu-w:#d9dee6; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0b1018; --sheet:#121924; --ink:#e6ebf2; --muted:#94a0b2; --line:#263142; --soft:#172030;
+  --accent:#5cc2b6; --accent-2:#13302d; --accent-ink:#06201d; --seal:#ff7b6e; --seal-soft:#2d1614;
+  --hu-w:#d9dee6; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 64px}
+.tri{height:5px;margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  background:linear-gradient(90deg,var(--hu-r) 0 33.33%,var(--hu-w) 33.33% 66.66%,var(--hu-g) 66.66%)}
+.wrap{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:24px;padding-top:32px}
+
+/* Fejléc */
+.mast{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:end;padding-bottom:26px;border-bottom:1px solid var(--line)}
+@media (max-width:760px){.mast{grid-template-columns:1fr}}
+.issuer{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.emblem{width:40px;height:40px;border-radius:10px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:.02em;flex:none}
+.issuer div{font-size:13px;line-height:1.35;color:var(--muted)}
+.issuer b{display:block;color:var(--ink);font-weight:600;font-size:14px}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,5.4vw,58px);line-height:.98;letter-spacing:-.03em;margin:8px 0 10px;text-wrap:balance}
+.lede{margin:0;color:var(--muted);font-size:16px;max-width:58ch}
+.reg{border:1px solid var(--line);background:var(--sheet);border-radius:var(--r);min-width:260px;overflow:hidden}
+.reg h2{margin:0;padding:10px 16px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--line);background:var(--soft)}
+.reg dl{margin:0;display:grid;grid-template-columns:auto 1fr}
+.reg dt,.reg dd{padding:8px 16px;border-bottom:1px solid var(--line);margin:0;font-size:13px}
+.reg dt{color:var(--muted)}
+.reg dd{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.reg dl > :nth-last-child(-n+2){border-bottom:0}
+
+.notice{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:0;background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.notice > div{padding:16px 20px}
+.notice > div + div{border-left:1px solid var(--line)}
+.notice p{margin:0;color:var(--muted);font-size:14px;max-width:76ch}
+.notice p strong{color:var(--ink)}
+.notice .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.notice .v{font-family:var(--f-display);font-weight:700;font-size:20px;margin-top:2px;white-space:nowrap}
+@media (max-width:720px){.notice{grid-template-columns:1fr 1fr}.notice > div:first-child{grid-column:1/-1}.notice > div + div{border-left:0;border-top:1px solid var(--line)}.notice > div:last-child{border-left:1px solid var(--line)}}
+
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+
+/* Rovatjegyzék */
+.toc{position:sticky;top:calc(env(safe-area-inset-top, 0px) + 20px);display:flex;flex-direction:column;gap:14px}
+@media (max-width:900px){.toc{position:static}}
+.toc h2{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:500}
+.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+@media (max-width:900px){.toc ol{flex-direction:row;flex-wrap:wrap;gap:6px}}
+.toc a{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px}
+@media (max-width:900px){.toc a{border:1px solid var(--line);background:var(--sheet);padding:6px 10px;font-size:13px}}
+.toc a:hover{background:var(--sheet)}
+.toc a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.toc .n{font-family:var(--f-mono);font-size:11px;min-width:32px;height:22px;padding:0 4px;display:grid;place-items:center;border-radius:6px;border:1px solid var(--line);color:var(--muted);flex:none;background:var(--sheet)}
+.toc li.done .n{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s ease}
+.pct{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* Rovatok */
+form{display:flex;flex-direction:column;gap:18px;min-width:0}
+fieldset{border:1px solid var(--line);background:var(--sheet);border-radius:var(--r);padding:0;margin:0;min-width:0;scroll-margin-top:20px}
+.sec-h{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start;padding:20px 24px;border-bottom:1px solid var(--line)}
+.sec-h .rn{font-family:var(--f-display);font-weight:700;font-size:13px;line-height:1;color:var(--accent);border:1.5px solid var(--accent);border-radius:7px;min-width:40px;height:28px;display:grid;place-items:center;padding:0 6px}
+.sec-h h3{font-family:var(--f-display);font-weight:700;font-size:20px;margin:0;letter-spacing:-.01em;line-height:1.25}
+.sec-h p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px 16px;padding:22px 24px 26px}
+.c2{grid-column:span 2}.c3{grid-column:span 3}.c4{grid-column:span 4}.c6{grid-column:span 6}
+@media (max-width:640px){.c2,.c3,.c4{grid-column:span 6}.grid{padding:18px 18px 22px}.sec-h{padding:18px}}
+.sub{grid-column:span 6;display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.sub::after{content:"";flex:1;height:1px;background:var(--line)}
+.group{grid-column:span 6;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px 16px}
+
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label,.lbl{font-size:13px;font-weight:600;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.code{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);font-weight:500;letter-spacing:.03em}
+.req{color:var(--seal);font-weight:700}
+.opt{font-weight:400;color:var(--muted);font-size:12px}
+input[type=text],input[type=email],input[type=tel],input[type=date],select{
+  width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--soft);border:1px solid var(--line);
+  border-radius:9px;padding:11px 13px;min-height:44px;transition:border-color .15s, box-shadow .15s, background .15s}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:34px}
+.mono{font-family:var(--f-mono);letter-spacing:.05em;font-variant-numeric:tabular-nums}
+input.up{text-transform:uppercase}
+input::placeholder{color:var(--muted);opacity:.65}
+input:focus,select:focus{outline:none;border-color:var(--accent);background:var(--sheet);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent)}
+input[readonly]{background:transparent;border-style:dashed}
+.field.bad input,.field.bad select{border-color:var(--seal);background:var(--seal-soft)}
+.field.ok input:not([readonly]),.field.ok select{border-color:color-mix(in srgb, var(--accent) 50%, var(--line))}
+.err{font-size:12.5px;color:var(--seal);margin:0}
+.err:empty{display:none}
+.hint{font-size:12px;color:var(--muted);margin:0}
+.warn{font-size:12.5px;color:var(--seal);margin:0;opacity:.85}
+.warn:empty{display:none}
+
+/* Kapcsoló jelölőnégyzet */
+.toggle{grid-column:span 6;display:flex;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:9px;background:var(--soft);cursor:pointer;font-size:14px}
+.toggle input{width:18px;height:18px;accent-color:var(--accent);margin:0;flex:none}
+
+/* Jogi nyilatkozatok */
+.legal{display:flex;flex-direction:column;padding:6px 24px 22px}
+@media (max-width:640px){.legal{padding:6px 18px 18px}}
+.legal-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0 8px}
+.legal-top p{margin:0;font-size:13px;color:var(--muted)}
+.clause{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.box{position:relative;width:22px;height:22px;margin-top:1px}
+.box input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:1;width:100%;height:100%}
+.box i{position:absolute;inset:0;border:1.5px solid var(--muted);border-radius:6px;background:var(--sheet);transition:.15s}
+.box i::after{content:"";position:absolute;left:6.5px;top:2.5px;width:6px;height:11px;border:solid var(--accent-ink);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) scale(0);transition:transform .15s}
+.box input:checked + i{background:var(--accent);border-color:var(--accent)}
+.box input:checked + i::after{transform:rotate(45deg) scale(1)}
+.box input:focus-visible + i{box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent)}
+.clause.bad .box i{border-color:var(--seal)}
+.clause h4{margin:0;font-size:14.5px;font-weight:600;display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;justify-content:space-between}
+.clause h4 label{cursor:pointer}
+.clause .ref{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);font-weight:500;letter-spacing:.03em;border:1px solid var(--line);border-radius:5px;padding:1px 6px;white-space:nowrap}
+.clause p{margin:6px 0 0;font-size:13px;color:var(--muted);max-width:80ch;line-height:1.62}
+.clause .err{margin-top:6px}
+
+/* Aláírás */
+.sig-wrap{position:relative;border:1px dashed var(--muted);border-radius:10px;background:var(--soft);height:170px;touch-action:none;overflow:hidden}
+.sig-wrap.bad{border-color:var(--seal);background:var(--seal-soft)}
+.sig-wrap canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+.sig-line{position:absolute;left:26px;right:26px;bottom:40px;border-bottom:1px solid var(--muted);opacity:.5;pointer-events:none}
+.sig-ph{position:absolute;left:26px;bottom:14px;font-size:12px;color:var(--muted);pointer-events:none;font-family:var(--f-mono)}
+.sig-x{position:absolute;left:26px;bottom:46px;font-size:18px;color:var(--muted);pointer-events:none}
+.sig-row{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+
+/* Gombok */
+.btn{font:inherit;font-weight:600;font-size:14px;border-radius:9px;padding:10px 16px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);cursor:pointer;transition:.15s;min-height:40px}
+.btn:hover{border-color:var(--ink)}
+.btn:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent)}
+.btn.sm{padding:6px 12px;font-size:13px;min-height:34px}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--paper);padding:15px 26px;font-size:15px;display:inline-flex;gap:10px;align-items:center}
+.btn.primary:hover{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.submit-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:6px 2px}
+.submit-row p{margin:0;font-size:12.5px;color:var(--muted);max-width:62ch}
+.summary{border:1px solid var(--seal);background:var(--seal-soft);color:var(--seal);border-radius:var(--r);padding:12px 16px;font-size:14px;font-weight:600}
+
+/* Átvételi elismervény */
+.receipt{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;animation:rise .45s ease both}
+@keyframes rise{from{transform:translateY(8px)}to{transform:none}}
+.rc-h{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:28px;border-bottom:1px solid var(--line);align-items:center}
+.rc-h h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,3.6vw,36px);margin:6px 0 8px;letter-spacing:-.02em}
+.rc-h p{margin:0;color:var(--muted);max-width:56ch}
+.stamp{width:150px;height:150px;flex:none;color:var(--seal);transform:rotate(-8deg);opacity:.9;animation:thump .45s cubic-bezier(.2,1.5,.4,1) .15s both}
+@keyframes thump{from{transform:rotate(-8deg) scale(1.5);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:.9}}
+.rc-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:0}
+.kv{padding:16px 28px;border-bottom:1px solid var(--line)}
+.kv dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kv dd{margin:4px 0 0;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.rc-foot{padding:18px 28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.rc-foot p{margin:0;font-size:12.5px;color:var(--muted);max-width:70ch}
+
+footer{font-family:var(--f-mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="tri" aria-hidden="true"></div>
+<div class="wrap">
+
+  <header class="mast">
+    <div>
+      <div class="issuer"><span class="emblem">NY</span><div><b>Nyilvántartási és Ügyfélkapcsolati Főosztály</b>Jelentkezések befogadása és elbírálása</div></div>
+      <div class="eyebrow">Hivatalos nyomtatvány · JL-01</div>
+      <h1>Jelentkezési lap</h1>
+      <p class="lede">Minecraft-játékban való részvételhez</p>
+    </div>
+    <aside class="reg" aria-label="Iktatási adatok">
+      <h2>Hivatal tölti ki</h2>
+      <dl>
+        <dt>Nyomtatványszám</dt><dd>JL-01/2026</dd>
+        <dt>Változat</dt><dd>3.1</dd>
+        <dt>Iktatószám</dt><dd id="reg-iktat">—</dd>
+        <dt>Érkeztetve</dt><dd id="reg-erk">—</dd>
+      </dl>
+    </aside>
+  </header>
+
+  <section class="notice" aria-label="Kitöltési tájékoztató">
+    <div><p><strong>Kitöltési tájékoztató.</strong> A jelentkezési lapot a személyazonosító igazolványban és a lakcímet igazoló hatósági igazolványban szereplő adatokkal egyezően kell kitölteni. A <span class="req">*</span>-gal jelölt rovatok kitöltése kötelező. Hiányos jelentkezés esetén a jelentkezőt hiánypótlásra hívjuk fel; annak elmulasztása a jelentkezés elutasítását vonja maga után.</p></div>
+    <div><div class="k">Eljárási díj</div><div class="v">Díjmentes</div></div>
+    <div><div class="k">Ügyintézési határidő</div><div class="v">15 nap</div></div>
+  </section>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Rovatok">
+      <h2>Rovatjegyzék</h2>
+      <ol id="toc">
+        <li data-for="s1"><a href="#s1"><span class="n">I.</span>Személyes adatok</a></li>
+        <li data-for="s2"><a href="#s2"><span class="n">II.</span>Lakcím</a></li>
+        <li data-for="s3"><a href="#s3"><span class="n">III.</span>Elérhetőség</a></li>
+        <li data-for="s4"><a href="#s4"><span class="n">IV.</span>Azonosítók, okmányok</a></li>
+        <li data-for="s5"><a href="#s5"><span class="n">V.</span>Tanulmányok</a></li>
+        <li data-for="s6"><a href="#s6"><span class="n">VI.</span>Értesítendő személy</a></li>
+        <li data-for="s7"><a href="#s7"><span class="n">VII.</span>Nyilatkozatok</a></li>
+        <li data-for="s8"><a href="#s8"><span class="n">VIII.</span>Kelt és aláírás</a></li>
+      </ol>
+      <div class="bar"><i id="bar"></i></div>
+      <div class="pct" id="pct">0 / 8 rovat kitöltve</div>
+    </nav>
+
+    <div style="min-width:0">
+    <form id="f" novalidate>
+
+      <!-- I. -->
+      <fieldset id="s1" data-sec>
+        <div class="sec-h"><span class="rn">I.</span><div><h3>A jelentkező személyes adatai</h3><p>A személyazonosító igazolványban szereplő módon, ékezetekkel.</p></div></div>
+        <div class="grid">
+          <div class="field c3"><label for="vnev"><span class="code">1.1</span>Vezetéknév <span class="req">*</span></label><input id="vnev" type="text" autocomplete="family-name" required data-rule="name"><p class="err"></p></div>
+          <div class="field c3"><label for="knev"><span class="code">1.2</span>Keresztnév <span class="req">*</span></label><input id="knev" type="text" autocomplete="given-name" required data-rule="name"><p class="err"></p></div>
+          <div class="field c3"><label for="szulnev"><span class="code">1.3</span>Születési név <span class="opt">(ha eltér)</span></label><input id="szulnev" type="text" data-rule="nameopt"><p class="err"></p></div>
+          <div class="field c3"><label for="anyja"><span class="code">1.4</span>Anyja születési neve <span class="req">*</span></label><input id="anyja" type="text" required data-rule="fullname"><p class="err"></p></div>
+          <div class="field c2"><label for="szhely"><span class="code">1.5</span>Születési hely <span class="req">*</span></label><input id="szhely" type="text" required data-rule="name"><p class="err"></p></div>
+          <div class="field c2"><label for="szido"><span class="code">1.6</span>Születési idő <span class="req">*</span></label><input id="szido" type="date" required data-rule="birth"><p class="err"></p></div>
+          <div class="field c2"><label for="allampolg"><span class="code">1.7</span>Állampolgárság <span class="req">*</span></label>
+            <select id="allampolg" required data-rule="select">
+              <option value="">Válasszon…</option><option>magyar</option><option>EGT-állampolgár</option><option>harmadik országbeli állampolgár</option><option>hontalan</option>
+            </select><p class="err"></p></div>
+        </div>
+      </fieldset>
+
+      <!-- II. -->
+      <fieldset id="s2" data-sec>
+        <div class="sec-h"><span class="rn">II.</span><div><h3>Lakcímadatok</h3><p>A lakcímet igazoló hatósági igazolványon (lakcímkártyán) szereplő adatok szerint.</p></div></div>
+        <div class="grid">
+          <div class="sub">Lakóhely (állandó lakcím)</div>
+          <div class="field c2"><label for="l-irsz"><span class="code">2.1</span>Irányítószám <span class="req">*</span></label><input id="l-irsz" type="text" inputmode="numeric" class="mono" maxlength="4" autocomplete="postal-code" required data-rule="zip"><p class="err"></p></div>
+          <div class="field c4"><label for="l-tel"><span class="code">2.2</span>Település <span class="req">*</span></label><input id="l-tel" type="text" autocomplete="address-level2" required data-rule="name"><p class="err"></p></div>
+          <div class="field c6"><label for="l-cim"><span class="code">2.3</span>Közterület neve, jellege, házszám, épület, lépcsőház, emelet, ajtó <span class="req">*</span></label><input id="l-cim" type="text" autocomplete="street-address" required data-rule="addr"><p class="err"></p></div>
+
+          <div class="sub">Tartózkodási hely</div>
+          <label class="toggle"><input type="checkbox" id="nincs-tart"> Tartózkodási hellyel nem rendelkezem, vagy az megegyezik a lakóhelyemmel</label>
+          <div class="group" id="tart">
+            <div class="field c2"><label for="t-irsz"><span class="code">2.4</span>Irányítószám <span class="req">*</span></label><input id="t-irsz" type="text" inputmode="numeric" class="mono" maxlength="4" required data-rule="zip"><p class="err"></p></div>
+            <div class="field c4"><label for="t-tel"><span class="code">2.5</span>Település <span class="req">*</span></label><input id="t-tel" type="text" required data-rule="name"><p class="err"></p></div>
+            <div class="field c6"><label for="t-cim"><span class="code">2.6</span>Közterület neve, jellege, házszám, épület, lépcsőház, emelet, ajtó <span class="req">*</span></label><input id="t-cim" type="text" required data-rule="addr"><p class="err"></p></div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- III. -->
+      <fieldset id="s3" data-sec>
+        <div class="sec-h"><span class="rn">III.</span><div><h3>Elérhetőség</h3><p>A jelentkezéssel kapcsolatos értesítéseket ezekre az elérhetőségekre küldjük.</p></div></div>
+        <div class="grid">
+          <div class="field c3"><label for="email"><span class="code">3.1</span>E-mail-cím <span class="req">*</span></label><input id="email" type="email" autocomplete="email" required data-rule="email" placeholder="nev@pelda.hu"><p class="err"></p></div>
+          <div class="field c3"><label for="tel"><span class="code">3.2</span>Telefonszám <span class="req">*</span></label><input id="tel" type="tel" class="mono" autocomplete="tel" required data-rule="phone" placeholder="+36 30 123 4567"><p class="err"></p></div>
+        </div>
+      </fieldset>
+
+      <!-- IV. -->
+      <fieldset id="s4" data-sec>
+        <div class="sec-h"><span class="rn">IV.</span><div><h3>Azonosító és okmányadatok</h3><p>Az azonosítók ellenőrzőszámát a rendszer a kitöltéskor automatikusan vizsgálja.</p></div></div>
+        <div class="grid">
+          <div class="field c3"><label for="taj"><span class="code">4.1</span>TAJ-szám <span class="req">*</span></label><input id="taj" type="text" inputmode="numeric" class="mono" maxlength="11" required data-rule="taj" placeholder="000 000 000"><p class="hint">Társadalombiztosítási azonosító jel, 9 számjegy.</p><p class="err"></p></div>
+          <div class="field c3"><label for="adoaz"><span class="code">4.2</span>Adóazonosító jel <span class="req">*</span></label><input id="adoaz" type="text" inputmode="numeric" class="mono" maxlength="10" required data-rule="adoaz" placeholder="8000000000"><p class="hint">10 számjegy, 8-as számjeggyel kezdődik.</p><p class="warn" id="adoaz-warn"></p><p class="err"></p></div>
+          <div class="field c3"><label for="szig"><span class="code">4.3</span>Személyazonosító igazolvány száma <span class="req">*</span></label><input id="szig" type="text" class="mono up" maxlength="9" autocomplete="off" required data-rule="szig" placeholder="123456AB"><p class="hint">Az igazolvány előlapján, a jobb felső sarokban.</p><p class="err"></p></div>
+          <div class="field c3"><label for="lcim"><span class="code">4.4</span>Lakcímkártya száma <span class="req">*</span></label><input id="lcim" type="text" class="mono up" maxlength="8" autocomplete="off" required data-rule="lcim" placeholder="123456AB"><p class="hint">Hat számjegy és két betű.</p><p class="err"></p></div>
+        </div>
+      </fieldset>
+
+      <!-- V. -->
+      <fieldset id="s5" data-sec>
+        <div class="sec-h"><span class="rn">V.</span><div><h3>Tanulmányi adatok</h3><p>A legmagasabb befejezett, illetve folyamatban lévő tanulmányok szerint.</p></div></div>
+        <div class="grid">
+          <div class="field c6"><label for="vegz"><span class="code">5.1</span>Legmagasabb iskolai végzettség <span class="req">*</span></label>
+            <select id="vegz" required data-rule="select">
+              <option value="">Válasszon…</option>
+              <option>Alapfokú (általános iskola 8. évfolyam)</option>
+              <option>Középfokú, érettségi nélkül (szakiskola, szakmunkásképző)</option>
+              <option>Középfokú, érettségivel (gimnázium, technikum)</option>
+              <option>Felsőfokú szakképzés</option>
+              <option>Alapképzés (BA/BSc, főiskolai oklevél)</option>
+              <option>Mesterképzés (MA/MSc, egyetemi oklevél)</option>
+              <option>Doktori fokozat (PhD, DLA)</option>
+              <option>Tanulmányai folyamatban</option>
+            </select><p class="err"></p></div>
+          <div class="field c4"><label for="intezmeny"><span class="code">5.2</span>Oktatási intézmény neve <span class="req">*</span></label><input id="intezmeny" type="text" required data-rule="inst" placeholder="Az oklevelet kiállító vagy jelenlegi intézmény"><p class="err"></p></div>
+          <div class="field c2"><label for="oktaz"><span class="code">5.3</span>Oktatási azonosító <span class="req">*</span></label><input id="oktaz" type="text" inputmode="numeric" class="mono" maxlength="11" required data-rule="oktaz" placeholder="70000000000"><p class="hint">11 számjegy, a diákigazolványon szerepel.</p><p class="err"></p></div>
+        </div>
+      </fieldset>
+
+      <!-- VI. -->
+      <fieldset id="s6" data-sec>
+        <div class="sec-h"><span class="rn">VI.</span><div><h3>Vészhelyzet esetén értesítendő személy</h3><p>Olyan személyt adjon meg, aki a jelentkezőnél rendszeresen elérhető.</p></div></div>
+        <div class="grid">
+          <div class="field c3"><label for="e-nev"><span class="code">6.1</span>Értesítendő személy neve <span class="req">*</span></label><input id="e-nev" type="text" required data-rule="fullname"><p class="err"></p></div>
+          <div class="field c3"><label for="e-kapcs"><span class="code">6.2</span>Kapcsolat jellege <span class="req">*</span></label>
+            <select id="e-kapcs" required data-rule="select">
+              <option value="">Válasszon…</option><option>szülő</option><option>házastárs / élettárs</option><option>testvér</option><option>egyéb hozzátartozó</option><option>egyéb kapcsolattartó</option>
+            </select><p class="err"></p></div>
+          <div class="field c3"><label for="e-tel"><span class="code">6.3</span>Értesítendő személy telefonszáma <span class="req">*</span></label><input id="e-tel" type="tel" class="mono" required data-rule="phone" placeholder="+36 30 123 4567"><p class="err"></p></div>
+        </div>
+      </fieldset>
+
+      <!-- VII. -->
+      <fieldset id="s7" data-sec>
+        <div class="sec-h"><span class="rn">VII.</span><div><h3>Jogi nyilatkozatok</h3><p>A 7.1–7.6. pontok elfogadása a jelentkezés befogadásának feltétele.</p></div></div>
+        <div class="legal">
+          <div class="legal-top"><p>Kérjük, a nyilatkozatokat elfogadásuk előtt olvassa el.</p><button type="button" class="btn sm" id="all">Kötelező nyilatkozatok elfogadása</button></div>
+
+          <div class="clause" data-clause>
+            <div class="box"><input type="checkbox" id="n1" required><i></i></div>
+            <div><h4><label for="n1">7.1 Hozzájárulás személyes adatok kezeléséhez <span class="req">*</span></label><span class="ref">GDPR 6. cikk (1) a)</span></h4>
+            <p>Az adatkezelési tájékoztatót megismertem, és hozzájárulok, hogy az adatkezelő a jelentkezési lapon megadott személyes adataimat az (EU) 2016/679 rendelet 6. cikk (1) bekezdés a) pontja alapján, a jelentkezés elbírálása és a résztvevői nyilvántartás vezetése céljából kezelje. Az adatokat a részvétel megszűnését követő öt évig őrizzük. Tudomásul veszem, hogy 16. életévét be nem töltött jelentkező esetén a hozzájárulás a szülői felügyeletet gyakorló személy jóváhagyásával érvényes.</p><p class="err"></p></div>
+          </div>
+
+          <div class="clause" data-clause>
+            <div class="box"><input type="checkbox" id="n2" required><i></i></div>
+            <div><h4><label for="n2">7.2 Az érintetti jogokról szóló tájékoztatás tudomásulvétele <span class="req">*</span></label><span class="ref">GDPR 15–21. cikk</span></h4>
+            <p>Tudomásul veszem, hogy jogosult vagyok a személyes adataimhoz való hozzáférésre, azok helyesbítésére, törlésére, kezelésük korlátozására, valamint az adathordozhatóságra és a tiltakozásra. Hozzájárulásomat bármikor visszavonhatom, ez a visszavonás előtti adatkezelés jogszerűségét nem érinti. Jogsértés esetén a Nemzeti Adatvédelmi és Információszabadság Hatósághoz fordulhatok vagy bírósághoz fordulhatok.</p><p class="err"></p></div>
+          </div>
+
+          <div class="clause" data-clause>
+            <div class="box"><input type="checkbox" id="n3" required><i></i></div>
+            <div><h4><label for="n3">7.3 Harmadik személy adatainak közlése <span class="req">*</span></label><span class="ref">GDPR 14. cikk</span></h4>
+            <p>Kijelentem, hogy a VI. rovatban megadott értesítendő személyt adatainak átadásáról és kezelésének céljáról tájékoztattam, és hozzájárulásával rendelkezem. Az értesítendő személy adatait az adatkezelő kizárólag vészhelyzet esetén, kapcsolatfelvétel céljából használja fel.</p><p class="err"></p></div>
+          </div>
+
+          <div class="clause" data-clause>
+            <div class="box"><input type="checkbox" id="n4" required><i></i></div>
+            <div><h4><label for="n4">7.4 Részvételi feltételek elfogadása <span class="req">*</span></label><span class="ref">Részvételi szabályzat 2026/3</span></h4>
+            <p>A részvételi szabályzatot megismertem és magamra nézve kötelezőnek elfogadom. Tudomásul veszem, hogy a szabályzat megsértése a részvételi jogosultság felfüggesztését vagy előzetes értesítés nélküli megszüntetését vonhatja maga után, és hogy a jelentkezés elfogadása nem keletkeztet alanyi jogot a részvételre.</p><p class="err"></p></div>
+          </div>
+
+          <div class="clause" data-clause>
+            <div class="box"><input type="checkbox" id="n5" required><i></i></div>
+            <div><h4><label for="n5">7.5 Elektronikus kapcsolattartás <span class="req">*</span></label><span class="ref">2015. évi CCXXII. tv.</span></h4>
+            <p>Hozzájárulok, hogy az adatkezelő a jelentkezéssel összefüggő értesítéseket, hiánypótlási felhívásokat és döntéseket a III. rovatban megadott e-mail-címre küldje. Az elektronikus úton közölt értesítést a kézbesítést követő ötödik munkanapon közöltnek kell tekinteni.</p><p class="err"></p></div>
+          </div>
+
+          <div class="clause" data-clause>
+            <div class="box"><input type="checkbox" id="n6" required><i></i></div>
+            <div><h4><label for="n6">7.6 Nyilatkozat az adatok valódiságáról <span class="req">*</span></label><span class="ref">Valóságnyilatkozat</span></h4>
+            <p>Büntetőjogi felelősségem tudatában kijelentem, hogy a jelentkezési lapon közölt adatok a valóságnak megfelelnek. Tudomásul veszem, hogy valótlan adat közlése esetén a jelentkezés érdemi vizsgálat nélkül elutasításra kerül, a már megadott részvételi jogosultság pedig visszavonható.</p><p class="err"></p></div>
+          </div>
+
+          <div class="clause">
+            <div class="box"><input type="checkbox" id="n7"><i></i></div>
+            <div><h4><label for="n7">7.7 Hozzájárulás tájékoztató üzenetek küldéséhez <span class="opt">(nem kötelező)</span></label><span class="ref">Grt. 6. §</span></h4>
+            <p>Hozzájárulok, hogy az adatkezelő a programokról és az ütemezett változásokról e-mailben tájékoztasson. A hozzájárulás bármikor, indokolás nélkül, díjmentesen visszavonható.</p></div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- VIII. -->
+      <fieldset id="s8" data-sec>
+        <div class="sec-h"><span class="rn">VIII.</span><div><h3>Keltezés és aláírás</h3><p>Aláírásával a jelentkező a VII. rovatban foglalt nyilatkozatokat magára nézve kötelezőnek ismeri el.</p></div></div>
+        <div class="grid">
+          <div class="field c3"><label for="kelt"><span class="code">8.1</span>Kelt (helység) <span class="req">*</span></label><input id="kelt" type="text" required data-rule="name"><p class="err"></p></div>
+          <div class="field c3"><label for="datum"><span class="code">8.2</span>Dátum</label><input id="datum" type="text" class="mono" readonly tabindex="-1"><p class="hint">A rendszer automatikusan tölti ki.</p></div>
+          <div class="field c6"><span class="lbl"><span class="code">8.3</span>A jelentkező saját kezű aláírása <span class="req">*</span></span>
+            <div class="sig-wrap" id="sigwrap"><span class="sig-x">✕</span><div class="sig-line"></div><span class="sig-ph" id="sigph">Írja alá egérrel, érintőtollal vagy ujjal</span><canvas id="sig" aria-label="Aláírási terület"></canvas></div>
+            <div class="sig-row"><p class="err" id="sig-err"></p><button type="button" class="btn sm" id="sigclear" style="margin-left:auto">Aláírás törlése</button></div>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="summary" id="summary" hidden></div>
+      <div class="submit-row">
+        <p>A jelentkezés benyújtásával elektronikus kapcsolattartást választ. A beküldést követően átvételi elismervényt állítunk ki, amely tartalmazza az iktatószámot.</p>
+        <button type="submit" class="btn primary">Jelentkezés benyújtása <span aria-hidden="true">→</span></button>
+      </div>
+    </form>
+
+    <section class="receipt" id="receipt" hidden aria-live="polite">
+      <div class="rc-h">
+        <div>
+          <div class="eyebrow">Átvételi elismervény</div>
+          <h2>Jelentkezését iktattuk</h2>
+          <p>A jelentkezési lapot befogadtuk és érdemi vizsgálatra továbbítottuk. Az elbírálás eredményéről a megadott e-mail-címen értesítjük.</p>
+        </div>
+        <svg class="stamp" viewBox="0 0 160 160" aria-hidden="true">
+          <defs><path id="arc" d="M80,80 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs>
+          <circle cx="80" cy="80" r="74" fill="none" stroke="currentColor" stroke-width="3.5"/>
+          <circle cx="80" cy="80" r="46" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text font-family="IBM Plex Mono, monospace" font-size="9.6" font-weight="600" fill="currentColor" letter-spacing="1.9"><textPath href="#arc">NYILVÁNTARTÁSI ÉS ÜGYFÉLKAPCSOLATI FŐOSZTÁLY ★</textPath></text>
+          <text x="80" y="77" text-anchor="middle" font-family="Familjen Grotesk, sans-serif" font-weight="700" font-size="15" fill="currentColor">ÉRKEZTETVE</text>
+          <text x="80" y="94" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" id="stampdate"></text>
+        </svg>
+      </div>
+      <dl class="rc-body" id="rcbody"></dl>
+      <div class="rc-foot">
+        <p>Jelen elismervény a jelentkezés beérkezését igazolja, és nem minősül a részvétel engedélyezésének. Kérjük, az iktatószámot a további kapcsolattartás során tüntesse fel.</p>
+        <button type="button" class="btn" id="again">Új jelentkezési lap</button>
+      </div>
+    </section>
+    </div>
+  </div>
+
+  <footer>
+    <span>JL-01/2026 · Nyilvántartási és Ügyfélkapcsolati Főosztály</span>
+    <span>A nyomtatvány a 2026. október 23-tól benyújtott jelentkezésekre alkalmazandó.</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const $ = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  const digits = v => (v||'').replace(/\D/g,'');
+  const p2 = n => String(n).padStart(2,'0');
+  const huDate = d => `${d.getFullYear()}. ${p2(d.getMonth()+1)}. ${p2(d.getDate())}.`;
+  $('#datum').value = huDate(new Date());
+
+  /* ---------- Ellenőrzőszám-algoritmusok ---------- */
+  function adoazCheck(v){
+    const d = digits(v);
+    if (d.length !== 10) return 'Az adóazonosító jel 10 számjegyből áll.';
+    if (d[0] !== '8') return 'Magánszemély adóazonosító jele 8-as számjeggyel kezdődik.';
+    let s = 0; for (let i=0;i<9;i++) s += (+d[i])*(i+1);
+    const c = s % 11;
+    if (c === 10 || c !== +d[9]) return 'Az adóazonosító jel ellenőrzőszáma hibás. Ellenőrizze az adóigazolványon.';
+    return true;
+  }
+  function tajCheck(v){
+    const d = digits(v);
+    if (d.length !== 9) return 'A TAJ-szám 9 számjegyből áll.';
+    let s = 0; for (let i=0;i<8;i++) s += (+d[i]) * (i%2===0 ? 3 : 7);
+    if (s % 10 !== +d[8]) return 'A TAJ-szám ellenőrzőszáma hibás. Ellenőrizze a TAJ-kártyán.';
+    return true;
+  }
+  function oktazCheck(v){
+    const d = digits(v);
+    if (d.length !== 11) return 'Az oktatási azonosító 11 számjegyből áll.';
+    if (d[0] !== '7') return 'Az oktatási azonosító 7-es számjeggyel kezdődik.';
+    let s = 0; for (let i=0;i<10;i++) s += (+d[i])*(i+1);
+    const c = s % 11;
+    if (c === 10 || c !== +d[10]) return 'Az oktatási azonosító ellenőrzőszáma hibás.';
+    return true;
+  }
+
+  const rules = {
+    name: v => v.trim().length >= 2 || 'Legalább 2 karakter szükséges.',
+    nameopt: v => !v.trim() || v.trim().length >= 2 || 'Legalább 2 karakter szükséges.',
+    fullname: v => /\S+\s+\S+/.test(v.trim()) || 'Vezeték- és keresztnevet egyaránt adjon meg.',
+    inst: v => v.trim().length >= 4 || 'Adja meg az intézmény teljes nevét.',
+    birth: v => {
+      const d = new Date(v+'T00:00:00');
+      if (isNaN(d)) return 'Érvénytelen dátum.';
+      if (d > new Date()) return 'A születési idő nem lehet jövőbeli időpont.';
+      if (d.getFullYear() < 1900) return 'Ellenőrizze a születési évet.';
+      return true;
+    },
+    select: v => !!v || 'Válasszon a listából.',
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Érvényes e-mail-címet adjon meg (pl. nev@pelda.hu).',
+    phone: v => { const d = digits(v); return (d.length >= 9 && d.length <= 12) || 'Érvényes telefonszámot adjon meg, országhívószámmal (+36…).'; },
+    zip: v => /^[1-9]\d{3}$/.test(v.trim()) || 'A magyarországi irányítószám 4 számjegyű.',
+    addr: v => (v.trim().length >= 5 && /\d/.test(v)) || 'Adja meg a közterület nevét, jellegét és a házszámot.',
+    taj: tajCheck, adoaz: adoazCheck, oktaz: oktazCheck,
+    szig: v => /^(\d{6}[A-Z]{2}|[A-Z]{2}\d{6,7})$/.test(v.trim().toUpperCase()) || 'Az igazolvány száma 6 számjegyből és 2 betűből áll (pl. 123456AB).',
+    lcim: v => /^\d{6}[A-Z]{2}$/.test(v.trim().toUpperCase()) || 'A lakcímkártya száma 6 számjegyből és 2 betűből áll (pl. 123456AB).'
+  };
+
+  function setState(field, msg, show){
+    if (!show || !field) return;
+    const err = $('.err', field);
+    field.classList.toggle('bad', msg !== true);
+    field.classList.toggle('ok', msg === true);
+    if (err) err.textContent = msg === true ? '' : msg;
+  }
+  function checkInput(el, show){
+    if (el.closest('[hidden]')) return true;
+    const field = el.closest('.field');
+    let msg = true;
+    if (!el.value.trim()) msg = el.required ? 'Kötelező rovat.' : true;
+    else if (el.dataset.rule) msg = rules[el.dataset.rule](el.value);
+    setState(field, msg, show);
+    return msg === true;
+  }
+  function checkClause(cl, show){
+    const ok = $('input', cl).checked;
+    if (show){ cl.classList.toggle('bad', !ok); $('.err', cl).textContent = ok ? '' : 'A nyilatkozat elfogadása nélkül a jelentkezés nem fogadható be.'; }
+    return ok;
+  }
+
+  /* ---------- Aláírás ---------- */
+  const cv = $('#sig'), wrap = $('#sigwrap'), ctx = cv.getContext('2d');
+  let inked = false, drawing = false, last = null, strokes = [];
+  function redraw(){
+    const r = wrap.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    cv.width = Math.max(1, r.width*dpr); cv.height = Math.max(1, r.height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#0f1a2b';
+    ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    strokes.forEach(s => { ctx.beginPath(); s.forEach((p,i) => i ? ctx.lineTo(p.x*r.width, p.y*r.height) : ctx.moveTo(p.x*r.width, p.y*r.height)); ctx.stroke(); });
+  }
+  const pos = e => { const r = cv.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width, y:(e.clientY-r.top)/r.height}; };
+  cv.addEventListener('pointerdown', e => { drawing = true; last = pos(e); strokes.push([last]); cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', e => {
+    if (!drawing) return;
+    const p = pos(e), r = cv.getBoundingClientRect();
+    strokes[strokes.length-1].push(p);
+    ctx.beginPath(); ctx.moveTo(last.x*r.width, last.y*r.height); ctx.lineTo(p.x*r.width, p.y*r.height); ctx.stroke();
+    last = p;
+    if (!inked){ inked = true; $('#sigph').hidden = true; checkSig(true); refresh(); }
+  });
+  ['pointerup','pointercancel'].forEach(t => cv.addEventListener(t, () => drawing = false));
+  window.addEventListener('resize', redraw);
+  if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', redraw);
+  redraw();
+  function clearSig(){ strokes = []; inked = false; $('#sigph').hidden = false; redraw(); }
+  $('#sigclear').addEventListener('click', () => { clearSig(); refresh(); });
+  function checkSig(show){
+    if (show){ wrap.classList.toggle('bad', !inked); $('#sig-err').textContent = inked ? '' : 'A jelentkezési lapot saját kezűleg alá kell írni.'; }
+    return inked;
+  }
+
+  /* ---------- Rovatok állapota ---------- */
+  function secValid(sec, show){
+    let ok = true;
+    $$('input[data-rule], select[data-rule]', sec).forEach(el => { if (!checkInput(el, show)) ok = false; });
+    $$('[data-clause]', sec).forEach(c => { if (!checkClause(c, show)) ok = false; });
+    if (sec.id === 's8' && !checkSig(show)) ok = false;
+    return ok;
+  }
+  function refresh(){
+    const secs = $$('[data-sec]'); let n = 0;
+    secs.forEach(s => { const ok = secValid(s, false); if (ok) n++; $(`#toc li[data-for="${s.id}"]`).classList.toggle('done', ok); });
+    $('#bar').style.width = (n / secs.length * 100) + '%';
+    $('#pct').textContent = `${n} / ${secs.length} rovat kitöltve`;
+  }
+
+  /* ---------- Formázás gépelés közben ---------- */
+  const only = (id, n) => $(id).addEventListener('input', e => { e.target.value = digits(e.target.value).slice(0, n); });
+  only('#adoaz', 10); only('#oktaz', 11); only('#l-irsz', 4); only('#t-irsz', 4);
+  $('#taj').addEventListener('input', e => { e.target.value = digits(e.target.value).slice(0,9).replace(/(\d{3})(?=\d)/g, '$1 '); });
+  ['#szig', '#lcim'].forEach(id => $(id).addEventListener('input', e => { e.target.value = e.target.value.toUpperCase().replace(/[^0-9A-Z]/g, ''); }));
+
+  /* Adóazonosító jel és születési idő egyezése */
+  function crossCheck(){
+    const d = digits($('#adoaz').value), b = $('#szido').value, w = $('#adoaz-warn');
+    w.textContent = '';
+    if (d.length === 10 && adoazCheck(d) === true && b){
+      const [y, m, dd] = b.split('-').map(Number);
+      const days = Math.round((Date.UTC(y, m-1, dd) - Date.UTC(1867, 0, 1)) / 86400000);
+      if (+d.slice(1, 6) !== days) w.textContent = 'Az adóazonosító jel nem egyezik a megadott születési idővel.';
+    }
+  }
+
+  /* Tartózkodási hely */
+  $('#nincs-tart').addEventListener('change', e => {
+    $('#tart').hidden = e.target.checked;
+    if (e.target.checked) $$('#tart .field').forEach(f => { f.classList.remove('bad','ok'); $('.err', f).textContent = ''; });
+    refresh();
+  });
+
+  /* ---------- Események ---------- */
+  const form = $('#f');
+  form.addEventListener('input', e => {
+    const el = e.target;
+    if (el.dataset && el.dataset.rule){ const f = el.closest('.field'); if (f && (f.classList.contains('bad') || f.classList.contains('ok'))) checkInput(el, true); }
+    if (el.id === 'adoaz' || el.id === 'szido') crossCheck();
+    refresh();
+  });
+  form.addEventListener('change', e => {
+    const c = e.target.closest('[data-clause]'); if (c) checkClause(c, true);
+    if (e.target.tagName === 'SELECT') checkInput(e.target, true);
+    refresh();
+  });
+  form.addEventListener('focusout', e => { const el = e.target; if (el.dataset && el.dataset.rule && el.value) checkInput(el, true); });
+
+  $('#all').addEventListener('click', () => { $$('[data-clause]').forEach(c => { $('input', c).checked = true; checkClause(c, true); }); refresh(); });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let bad = false;
+    $$('[data-sec]').forEach(s => { if (!secValid(s, true)) bad = true; });
+    refresh();
+    const sum = $('#summary');
+    if (bad){
+      const n = $$('.field.bad, .clause.bad, .sig-wrap.bad').length;
+      sum.textContent = `A jelentkezés nem fogadható be: ${n} rovat hiányos vagy hibás. A javítandó rovatokat pirossal jelöltük.`;
+      sum.hidden = false;
+      const first = $('.field.bad, .clause.bad, .sig-wrap.bad');
+      if (first){
+        first.scrollIntoView({behavior:'smooth', block:'center'});
+        const f = $('input:not([type=checkbox]), select', first) || $('input', first);
+        if (f) setTimeout(() => f.focus({preventScroll:true}), 350);
+      }
+      return;
+    }
+    sum.hidden = true;
+    const now = new Date();
+    const iktat = `JL/${now.getFullYear()}/${Math.floor(10000 + Math.random()*89999)}-1`;
+    const hat = new Date(now.getTime() + 15*86400000);
+    const ts = `${huDate(now)} ${p2(now.getHours())}:${p2(now.getMinutes())}`;
+    const rows = [
+      ['Iktatószám', iktat],
+      ['Jelentkező neve', `${$('#vnev').value.trim()} ${$('#knev').value.trim()}`],
+      ['Születési hely, idő', `${$('#szhely').value.trim()}, ${$('#szido').value.replace(/-/g, '. ')}.`],
+      ['Lakóhely', `${$('#l-irsz').value} ${$('#l-tel').value.trim()}, ${$('#l-cim').value.trim()}`],
+      ['Értesítési e-mail-cím', $('#email').value.trim()],
+      ['Érkeztetés időpontja', ts],
+      ['Ügyintézési határidő', huDate(hat)],
+      ['Elfogadott nyilatkozatok', `${$$('.legal input:checked').length} / 7`],
+      ['Aláírás', 'Saját kezű, elektronikus úton rögzítve']
+    ];
+    const body = $('#rcbody'); body.innerHTML = '';
+    rows.forEach(([k, v]) => {
+      const d = document.createElement('div'); d.className = 'kv';
+      const dt = document.createElement('dt'); dt.textContent = k;
+      const dd = document.createElement('dd'); dd.textContent = v; if (k === 'Iktatószám') dd.className = 'mono';
+      d.append(dt, dd); body.append(d);
+    });
+    $('#stampdate').textContent = huDate(now).replace(/ /g, '');
+    $('#reg-iktat').textContent = iktat;
+    $('#reg-erk').textContent = ts;
+    form.hidden = true; $('#receipt').hidden = false;
+    $('#receipt').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  $('#again').addEventListener('click', () => {
+    form.reset();
+    $$('.bad, .ok').forEach(x => x.classList.remove('bad', 'ok'));
+    $$('.err').forEach(x => x.textContent = '');
+    $('#adoaz-warn').textContent = ''; $('#tart').hidden = false;
+    $('#reg-iktat').textContent = '—'; $('#reg-erk').textContent = '—';
+    $('#datum').value = huDate(new Date());
+    $('#receipt').hidden = true; form.hidden = false;
+    clearSig(); refresh();
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  refresh();
+})();
+</script>
+</body>
+</html>
